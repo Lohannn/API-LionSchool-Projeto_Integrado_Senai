@@ -1,7 +1,7 @@
 /************************************************************************************************************************************************
  * Autor: Lohannes da Silva Costa
  * Data: 24/03/2023
- * Versão: 1.0.24.3.23
+ * Versão: 2.0.25.3.23
  * Objetivo: Criar funções para alimentar uma API escolar.
  ************************************************************************************************************************************************/
 
@@ -14,6 +14,7 @@ const getCursos = function () {
     listaCursos.cursos.forEach(function (curso) {
         listaCursosJson = {}
 
+        listaCursosJson.nome = curso.nome
         listaCursosJson.sigla = curso.sigla
         listaCursosJson.icone = curso.icone
     })
@@ -31,7 +32,6 @@ const getAlunos = function () {
         alunosMatriculados.foto = aluno.foto
         alunosMatriculados.nome = aluno.nome
         alunosMatriculados.matricula = aluno.matricula
-        alunosMatriculados.sexo = aluno.sexo
         alunosMatriculados.status = aluno.status
 
         listaAlunosArray.push(alunosMatriculados)
@@ -46,14 +46,60 @@ const getAlunos = function () {
     return listaAlunosJson
 }
 
+const getSigla = function (palavraNaoAbreviada) {
+    let palavra = palavraNaoAbreviada
+
+    const ignorar = ['de', 'a', 'do', 'da', 'e', 'em', 'para', 'com', 'por', 'sem', 'sob'];
+    let palavraDividida = palavra.split(' ')
+    let sigla = '';
+
+    if (palavraDividida.length === 1) {
+        sigla = palavraDividida[0].slice(0, 2).toUpperCase(); // retorna as duas primeiras letras da palavra em maiúsculas
+    } else {
+        for (let i = 0; i < palavraDividida.length; i++) {
+            let palavra = palavraDividida[i];
+            if (!ignorar.includes(palavra)) {
+                sigla += palavra.charAt(0);
+            }
+        }
+    }
+
+    return sigla.toUpperCase();
+}
+
 const getAlunoMatricula = function (numeroDeMatricula) {
     let matricula = numeroDeMatricula
     let listaAlunosJson = false;
 
     listaAlunos.alunos.forEach(function (aluno) {
         if (aluno.matricula == matricula) {
+            let listaDisciplinasArray = []
             listaAlunosJson = {}
-            listaAlunosJson = aluno
+
+            listaAlunosJson.foto = aluno.foto
+            listaAlunosJson.nome = aluno.nome
+            listaAlunosJson.matricula = aluno.matricula
+            listaAlunosJson.status = aluno.status
+            listaAlunosJson.curso = {}
+
+            aluno.curso.forEach(function (curso) {
+
+                listaAlunosJson.curso.nome = curso.nome
+                listaAlunosJson.curso.sigla = curso.sigla
+
+                curso.disciplinas.forEach(function (disciplina) {
+                    let disciplinaJson = {}
+
+                    disciplinaJson.nome = disciplina.nome
+                    disciplinaJson.sigla = getSigla(disciplina.nome)
+                    disciplinaJson.media = disciplina.media
+                    disciplinaJson.status = disciplina.status
+
+                    listaDisciplinasArray.push(disciplinaJson)
+                })
+
+                listaAlunosJson.curso.disciplinas = listaDisciplinasArray
+            })
         }
     })
 
@@ -68,7 +114,14 @@ const getAlunosDoCurso = function (siglaDoCurso) {
     listaAlunos.alunos.forEach(function (aluno) {
         aluno.curso.forEach(function (curso_aluno) {
             if (curso_aluno.sigla.toUpperCase() == curso) {
-                listaAlunosArray.push(aluno)
+                let listaAlunosDoCurso = {}
+
+                listaAlunosDoCurso.foto = aluno.foto
+                listaAlunosDoCurso.nome = aluno.nome
+                listaAlunosDoCurso.matricula = aluno.matricula
+                listaAlunosDoCurso.status = aluno.status
+
+                listaAlunosArray.push(listaAlunosDoCurso)
             }
         })
     })
@@ -88,7 +141,14 @@ const getAlunosStatus = function (statusDoAluno) {
 
     listaAlunos.alunos.forEach(function (aluno) {
         if (aluno.status.toUpperCase() == status) {
-            listaAlunosArray.push(aluno)
+            let listaAlunosDoCurso = {}
+
+            listaAlunosDoCurso.foto = aluno.foto
+            listaAlunosDoCurso.nome = aluno.nome
+            listaAlunosDoCurso.matricula = aluno.matricula
+            listaAlunosDoCurso.status = aluno.status
+
+            listaAlunosArray.push(listaAlunosDoCurso)
         }
     })
 
