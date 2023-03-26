@@ -8,7 +8,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const alunosCursos = require('./app/main.js')
+const alunosCursos = require('./modulo/app/main.js')
 
 const app = express();
 
