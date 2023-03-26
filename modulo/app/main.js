@@ -1,7 +1,7 @@
 /************************************************************************************************************************************************
  * Autor: Lohannes da Silva Costa
  * Data: 24/03/2023
- * Versão: 2.0.25.3.23
+ * Versão: 2.1.26.3.23
  * Objetivo: Criar funções para alimentar uma API escolar.
  ************************************************************************************************************************************************/
 
@@ -10,14 +10,22 @@ const listaCursos = require('../json/cursos.js')
 
 const getCursos = function () {
     let listaCursosJson = false;
+    let listaCursosArray = []
 
     listaCursos.cursos.forEach(function (curso) {
-        listaCursosJson = {}
+        let cursoRegistrado = {}
 
-        listaCursosJson.nome = curso.nome
-        listaCursosJson.sigla = curso.sigla
-        listaCursosJson.icone = curso.icone
+        cursoRegistrado.nome = curso.nome
+        cursoRegistrado.sigla = curso.sigla
+        cursoRegistrado.icone = curso.icone
+
+        listaCursosArray.push(cursoRegistrado)
     })
+
+    if(listaCursosArray.length > 0){
+        listaCursosJson = {}
+        listaCursosJson.cursos = listaCursosArray
+    }
 
     return listaCursosJson
 }
@@ -159,12 +167,6 @@ const getAlunosStatus = function (statusDoAluno) {
     }
     return listaAlunosJson
 }
-
-// 20151001001
-// 20151001002
-// 20151001017
-// DS
-// RDS
 
 module.exports = {
     getCursos,
