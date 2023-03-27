@@ -2,13 +2,13 @@ var cursos = [
     {
         "nome"  :   "001 - Técnico em Desenvolvimento de Sistemas",
         "sigla" :   "DS",
-        "icone" :   "https://i.imgur.com/1AXB9D3.png",
+        "icone" :   "https://i.imgur.com/7SA6Lf0_d.webp?maxwidth=760&fidelity=grand",
         "carga" :   "1200",
     },
     {
         "nome"  :   "002 - Técnico em Redes de Computadores",
         "sigla" :   "RDS",
-        "icone" :   "https://i.imgur.com/RfocGT1.png",
+        "icone" :   "https://imgur.com/rRj9rz5",
         "carga" :   "1200"
     }
 ];
