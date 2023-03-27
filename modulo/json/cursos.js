@@ -8,7 +8,7 @@ var cursos = [
     {
         "nome"  :   "002 - Técnico em Redes de Computadores",
         "sigla" :   "RDS",
-        "icone" :   "https://imgur.com/rRj9rz5",
+        "icone" :   "https://i.imgur.com/rRj9rz5_d.webp?maxwidth=760&fidelity=grand",
         "carga" :   "1200"
     }
 ];
