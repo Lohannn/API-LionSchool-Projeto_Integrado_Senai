@@ -94,6 +94,7 @@ const getAlunoMatricula = function (numeroDeMatricula) {
 
                 listaAlunosJson.curso.nome = curso.nome
                 listaAlunosJson.curso.sigla = curso.sigla
+                listaAlunosJson.curso.conclusao = curso.conclusao
 
                 curso.disciplinas.forEach(function (disciplina) {
                     let disciplinaJson = {}
@@ -128,6 +129,13 @@ const getAlunosDoCurso = function (siglaDoCurso) {
                 listaAlunosDoCurso.nome = aluno.nome
                 listaAlunosDoCurso.matricula = aluno.matricula
                 listaAlunosDoCurso.status = aluno.status
+                listaAlunosDoCurso.curso = {}
+
+                aluno.curso.forEach(function (curso) {
+                    listaAlunosDoCurso.curso.nome = curso.nome
+                    listaAlunosDoCurso.curso.sigla = curso.sigla
+                    listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                })
 
                 listaAlunosArray.push(listaAlunosDoCurso)
             }
@@ -155,6 +163,13 @@ const getAlunosStatus = function (statusDoAluno) {
             listaAlunosDoCurso.nome = aluno.nome
             listaAlunosDoCurso.matricula = aluno.matricula
             listaAlunosDoCurso.status = aluno.status
+            listaAlunosDoCurso.curso = {}
+
+                aluno.curso.forEach(function (curso) {
+                    listaAlunosDoCurso.curso.nome = curso.nome
+                    listaAlunosDoCurso.curso.sigla = curso.sigla
+                    listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                })
 
             listaAlunosArray.push(listaAlunosDoCurso)
         }
