@@ -45,13 +45,36 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     let statusCode;
     let dadosEstado = {};
 
-    let cursos = alunosCursos.getAlunos()
+    let curso = request.query.curso
+    let status = request.query.status
 
-    if (cursos) {
-        statusCode = 200
-        dadosEstado = cursos
+    if (curso != undefined) {
+        let alunos = alunosCursos.getAlunosDoCurso(curso)
+
+        if (alunos) {
+            statusCode = 200
+            dadosEstado = alunos
+        } else {
+            statusCode = 404
+        }
+    } else if (status != undefined) {
+        let alunos = alunosCursos.getAlunosStatus(status)
+
+        if (alunos) {
+            statusCode = 200
+            dadosEstado = alunos
+        } else {
+            statusCode = 404
+        }
     } else {
-        statusCode = 500
+        let alunos = alunosCursos.getAlunos()
+
+        if (alunos) {
+            statusCode = 200
+            dadosEstado = alunos
+        } else {
+            statusCode = 500
+        }
     }
 
     response.status(statusCode)
@@ -74,57 +97,6 @@ app.get('/v1/lion-school/alunos/:matricula', cors(), async function (request, re
         if (aluno) {
             statusCode = 200
             dadosEstado = aluno
-        } else {
-            statusCode = 404
-        }
-    }
-    //Retorna o código e o JSON
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
-
-app.get('/v2/lion-school/alunos', cors(), async function (request, response, next) {
-    let statusCode;
-    let dadosEstado = {};
-    //Recebe a sigla do estado que enviada pela url da requisição.
-    let curso = request.query.curso
-    // console.log(curso);
-
-    if (curso == '' || curso == undefined || !isNaN(curso)) {
-        statusCode = 400
-        dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e não pode conter números.'
-    } else {
-        let alunos = alunosCursos.getAlunosDoCurso(curso)
-
-        //Tratamento para validar o sucesso da requisição
-        if (alunos) {
-            statusCode = 200
-            dadosEstado = alunos
-        } else {
-            statusCode = 404
-        }
-    }
-    //Retorna o código e o JSON
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
-
-app.get('/v3/lion-school/alunos', cors(), async function (request, response, next) {
-    let statusCode;
-    let dadosEstado = {};
-    //Recebe a sigla do estado que enviada pela url da requisição.
-    let status = request.query.status
-
-    if (status == '' || status == undefined || !isNaN(status)) {
-        statusCode = 400
-        dadosEstado.message = 'Não foi possível processar pois os dados de entrada (status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e não pode conter números.'
-    } else {
-        let alunos = alunosCursos.getAlunosStatus(status)
-
-        //Tratamento para validar o sucesso da requisição
-        if (alunos) {
-            statusCode = 200
-            dadosEstado = alunos
         } else {
             statusCode = 404
         }
