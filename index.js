@@ -1,7 +1,7 @@
 /************************************************************************************************************************************************
  * Autor: Lohannes da Silva Costa
  * Data: 24/03/2023
- * Versão: 1.1.25.3.23
+ * Versão: 2.0.31.3.23
  * Objetivo: API que retornará os dados necessários para um site da escola Lion School.
  ************************************************************************************************************************************************/
 
@@ -48,23 +48,50 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     let curso = request.query.curso
     let status = request.query.status
 
-    if (curso != undefined) {
-        let alunos = alunosCursos.getAlunosDoCurso(curso)
+    if (curso !== undefined && status !== undefined) {
 
-        if (alunos) {
-            statusCode = 200
-            dadosEstado = alunos
+        if (curso == '' || !isNaN(curso) || status == '' || !isNaN(status)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
         } else {
-            statusCode = 404
+
+            let alunos = alunosCursos.getAlunosDoCurso(curso)
+            let alunosStatus = alunosCursos.getAlunosDaListaPeloStatus(alunos, status)
+
+            if (alunosStatus) {
+                statusCode = 200
+                dadosEstado = alunosStatus
+            } else {
+                statusCode = 404
+            }
         }
-    } else if (status != undefined) {
-        let alunos = alunosCursos.getAlunosStatus(status)
-
-        if (alunos) {
-            statusCode = 200
-            dadosEstado = alunos
+    } else if (curso !== undefined) {
+        if (curso == '' || !isNaN(curso)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
         } else {
-            statusCode = 404
+            let alunos = alunosCursos.getAlunosDoCurso(curso)
+
+            if (alunos) {
+                statusCode = 200
+                dadosEstado = alunos
+            } else {
+                statusCode = 404
+            }
+        }
+    } else if (status !== undefined) {
+        if (status == '' || !isNaN(status)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+        } else {
+            let alunos = alunosCursos.getAlunosStatus(status)
+
+            if (alunos) {
+                statusCode = 200
+                dadosEstado = alunos
+            } else {
+                statusCode = 404
+            }
         }
     } else {
         let alunos = alunosCursos.getAlunos()

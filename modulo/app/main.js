@@ -1,7 +1,7 @@
 /************************************************************************************************************************************************
  * Autor: Lohannes da Silva Costa
  * Data: 24/03/2023
- * Versão: 2.1.26.3.23
+ * Versão: 3.0.31.3.23
  * Objetivo: Criar funções para alimentar uma API escolar.
  ************************************************************************************************************************************************/
 
@@ -22,7 +22,7 @@ const getCursos = function () {
         listaCursosArray.push(cursoRegistrado)
     })
 
-    if(listaCursosArray.length > 0){
+    if (listaCursosArray.length > 0) {
         listaCursosJson = {}
         listaCursosJson.cursos = listaCursosArray
     }
@@ -165,11 +165,11 @@ const getAlunosStatus = function (statusDoAluno) {
             listaAlunosDoCurso.status = aluno.status
             listaAlunosDoCurso.curso = {}
 
-                aluno.curso.forEach(function (curso) {
-                    listaAlunosDoCurso.curso.nome = curso.nome
-                    listaAlunosDoCurso.curso.sigla = curso.sigla
-                    listaAlunosDoCurso.curso.conclusao = curso.conclusao
-                })
+            aluno.curso.forEach(function (curso) {
+                listaAlunosDoCurso.curso.nome = curso.nome
+                listaAlunosDoCurso.curso.sigla = curso.sigla
+                listaAlunosDoCurso.curso.conclusao = curso.conclusao
+            })
 
             listaAlunosArray.push(listaAlunosDoCurso)
         }
@@ -183,10 +183,44 @@ const getAlunosStatus = function (statusDoAluno) {
     return listaAlunosJson
 }
 
+const getAlunosDaListaPeloStatus = function (listaNova, statusDoAluno) {
+    let status = statusDoAluno.toUpperCase()
+    let alunos = listaNova
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+
+    alunos.alunos.forEach(function (aluno) {
+        if (aluno.status.toUpperCase() == status) {
+            let listaAlunosDoCurso = {}
+
+            listaAlunosDoCurso.foto = aluno.foto
+            listaAlunosDoCurso.nome = aluno.nome
+            listaAlunosDoCurso.matricula = aluno.matricula
+            listaAlunosDoCurso.status = aluno.status
+            listaAlunosDoCurso.curso = {}
+            listaAlunosDoCurso.curso.nome = aluno.curso.nome
+            listaAlunosDoCurso.curso.sigla = aluno.curso.sigla
+            listaAlunosDoCurso.curso.conclusao = aluno.curso.conclusao
+
+            listaAlunosArray.push(listaAlunosDoCurso)
+        }
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+    return listaAlunosJson
+}
+
+// console.log(getAlunosDoCurso('RDS').alunos);
+
 module.exports = {
     getCursos,
     getAlunos,
     getAlunoMatricula,
     getAlunosDoCurso,
-    getAlunosStatus
+    getAlunosStatus,
+    getAlunosDaListaPeloStatus
 }
