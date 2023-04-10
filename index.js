@@ -13,10 +13,13 @@ const alunosCursos = require('./modulo/app/main.js')
 const app = express();
 
 app.use((request, response, next) => {
+    //Define se a API será pública ou privada.
     response.header('Access-Control-Allow-Origin', '*')
 
+    //Permite definir quais métodos poderão ser utilizados nas requisições da API
     response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
 
+    //Envia para o cors() as regras de permissão
     app.use(cors())
 
     next();
