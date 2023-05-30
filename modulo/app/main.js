@@ -18,6 +18,7 @@ const getCursos = function () {
         cursoRegistrado.nome = curso.nome
         cursoRegistrado.sigla = curso.sigla
         cursoRegistrado.icone = curso.icone
+        cursoRegistrado.carga = curso.carga
 
         listaCursosArray.push(cursoRegistrado)
     })
