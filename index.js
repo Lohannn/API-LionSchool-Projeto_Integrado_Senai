@@ -30,6 +30,18 @@ app.use((request, response, next) => {
 app.get('/v1/lion-school/cursos', cors(), async function (request, response, next) {
     let statusCode;
     let dadosEstado = {};
+    let nome = request.query;
+    
+    if(nome != undefined){
+        let cursos = alunosCursos.getCursosByName(nome)
+
+    if (cursos) {
+        statusCode = 200
+        dadosEstado = cursos
+    } else {
+        statusCode = 500
+    }
+    } else {
 
     let cursos = alunosCursos.getCursos()
 
@@ -39,9 +51,11 @@ app.get('/v1/lion-school/cursos', cors(), async function (request, response, nex
     } else {
         statusCode = 500
     }
+    }
 
     response.status(statusCode)
     response.json(dadosEstado)
+    
 })
 
 app.get('/v1/lion-school/alunos', cors(), async function (request, response, next) {
