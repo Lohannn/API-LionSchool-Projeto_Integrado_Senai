@@ -250,5 +250,6 @@ module.exports = {
     getAlunoMatricula,
     getAlunosDoCurso,
     getAlunosStatus,
-    getAlunosDaListaPeloStatus
+    getAlunosDaListaPeloStatus,
+    getCursosByName
 }
