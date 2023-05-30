@@ -31,6 +31,33 @@ const getCursos = function () {
     return listaCursosJson
 }
 
+const getCursosByName = function (nomeDoCurso) {
+    let listaCursosJson = false;
+    let listaCursosArray = []
+    let value = new RegExp(nomeDoCurso, 'gi')
+
+    listaCursos.cursos.forEach(function (curso) {
+        if(curso.nome.includes(value)){
+        let cursoRegistrado = {}
+
+        cursoRegistrado.nome = curso.nome
+        cursoRegistrado.sigla = curso.sigla
+        cursoRegistrado.icone = curso.icone
+        cursoRegistrado.carga = curso.carga
+
+        listaCursosArray.push(cursoRegistrado)
+        }
+        
+    })
+
+    if (listaCursosArray.length > 0) {
+        listaCursosJson = {}
+        listaCursosJson.cursos = listaCursosArray
+    }
+
+    return listaCursosJson
+}
+
 const getAlunos = function () {
     let listaAlunosJson = false;
     let listaAlunosArray = []
