@@ -37,7 +37,7 @@ const getCursosByName = function (nomeDoCurso) {
     let value = new RegExp(nomeDoCurso, 'gi')
 
     listaCursos.cursos.forEach(function (curso) {
-        if(curso.nome.includes(value)){
+        if(curso.nome..match(value)){
         let cursoRegistrado = {}
 
         cursoRegistrado.nome = curso.nome
