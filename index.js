@@ -62,10 +62,26 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     let statusCode;
     let dadosEstado = {};
 
+    let nome = request.query.nome
     let curso = request.query.curso
     let status = request.query.status
 
-    if (curso !== undefined && status !== undefined) {
+
+    if(curso !== undefined && status !== undefined && nome !== undefined){
+        if (curso == '' || !isNaN(curso) || status == '' || !isNaN(status) || nome == '' || !isNaN(nome)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso, status ou nome) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+        } else {
+            let alunosStatus = alunosCursos.getAlunosByNameAndCursoAndStatus(alunos, curso, status)
+
+            if (alunosStatus) {
+                statusCode = 200
+                dadosEstado = alunosStatus
+            } else {
+                statusCode = 404
+            }
+        }
+    } else if (curso !== undefined && status !== undefined) {
 
         if (curso == '' || !isNaN(curso) || status == '' || !isNaN(status)) {
             statusCode = 400
@@ -82,12 +98,58 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 statusCode = 404
             }
         }
+    } else if (nome !== undefined && status !== undefined) {
+
+        if (nome == '' || !isNaN(nome) || status == '' || !isNaN(status)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (nome ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+        } else {
+
+            let alunosStatus = alunosCursos.getAlunosByNameAndStatus(nome, status)
+
+            if (alunosStatus) {
+                statusCode = 200
+                dadosEstado = alunosStatus
+            } else {
+                statusCode = 404
+            }
+        }
+    } else if (curso !== undefined && nome !== undefined) {
+
+        if (curso == '' || !isNaN(curso) || nome == '' || !isNaN(nome)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou nome) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+        } else {
+
+            let alunosStatus = alunosCursos.getAlunosByNameAndCurso(nome, curso)
+
+            if (alunosStatus) {
+                statusCode = 200
+                dadosEstado = alunosStatus
+            } else {
+                statusCode = 404
+            }
+        }
     } else if (curso !== undefined) {
         if (curso == '' || !isNaN(curso)) {
             statusCode = 400
-            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
         } else {
             let alunos = alunosCursos.getAlunosDoCurso(curso)
+
+            if (alunos) {
+                statusCode = 200
+                dadosEstado = alunos
+            } else {
+                statusCode = 404
+            }
+        }
+    } else if (nome !== undefined) {
+        if (curso == '' || !isNaN(curso)) {
+            statusCode = 400
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (nome) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+        } else {
+            let alunos = alunosCursos.getAlunosByName(nome)
 
             if (alunos) {
                 statusCode = 200
@@ -99,7 +161,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     } else if (status !== undefined) {
         if (status == '' || !isNaN(status)) {
             statusCode = 400
-            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (curso ou status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
+            dadosEstado.message = 'Não foi possível processar pois os dados de entrada (status) que foram enviados não correspondem ao exigido, confira o valor pois não poder ser Vazio, e devem ser apenas letras.'
         } else {
             let alunos = alunosCursos.getAlunosStatus(status)
 

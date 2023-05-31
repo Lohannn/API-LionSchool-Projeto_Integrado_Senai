@@ -37,17 +37,17 @@ const getCursosByName = function (nomeDoCurso) {
     let value = new RegExp(nomeDoCurso, 'gi')
 
     listaCursos.cursos.forEach(function (curso) {
-        if(curso.nome.match(value)){
-        let cursoRegistrado = {}
+        if (curso.nome.match(value)) {
+            let cursoRegistrado = {}
 
-        cursoRegistrado.nome = curso.nome
-        cursoRegistrado.sigla = curso.sigla
-        cursoRegistrado.icone = curso.icone
-        cursoRegistrado.carga = curso.carga
+            cursoRegistrado.nome = curso.nome
+            cursoRegistrado.sigla = curso.sigla
+            cursoRegistrado.icone = curso.icone
+            cursoRegistrado.carga = curso.carga
 
-        listaCursosArray.push(cursoRegistrado)
+            listaCursosArray.push(cursoRegistrado)
         }
-        
+
     })
 
     if (listaCursosArray.length > 0) {
@@ -71,6 +71,33 @@ const getAlunos = function () {
         alunosMatriculados.status = aluno.status
 
         listaAlunosArray.push(alunosMatriculados)
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+
+    return listaAlunosJson
+}
+
+const getAlunosByName = function (name) {
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+    let value = new RegExp(name, 'gi')
+
+    listaAlunos.alunos.forEach(function (aluno) {
+        if (aluno.nome.match(value)) {
+            let alunosMatriculados = {}
+
+            alunosMatriculados.foto = aluno.foto
+            alunosMatriculados.nome = aluno.nome
+            alunosMatriculados.matricula = aluno.matricula
+            alunosMatriculados.status = aluno.status
+
+            listaAlunosArray.push(alunosMatriculados)
+        }
     })
 
     if (listaAlunosArray.length > 0) {
@@ -211,6 +238,157 @@ const getAlunosStatus = function (statusDoAluno) {
     return listaAlunosJson
 }
 
+const getAlunosByNameAndCurso = function (nomeDoAluno, siglaDoCurso) {
+    let curso = siglaDoCurso.toUpperCase()
+    let nome = new RegExp(nomeDoAluno, 'gi')
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+
+    listaAlunos.alunos.forEach(function (aluno) {
+        if (aluno.nome.match(nome)) {
+            aluno.curso.forEach(function (curso_aluno) {
+                if (curso_aluno.sigla.toUpperCase() == curso) {
+                    let listaAlunosDoCurso = {}
+
+                    listaAlunosDoCurso.foto = aluno.foto
+                    listaAlunosDoCurso.nome = aluno.nome
+                    listaAlunosDoCurso.matricula = aluno.matricula
+                    listaAlunosDoCurso.status = aluno.status
+                    listaAlunosDoCurso.curso = {}
+
+                    aluno.curso.forEach(function (curso) {
+                        listaAlunosDoCurso.curso.nome = curso.nome
+                        listaAlunosDoCurso.curso.sigla = curso.sigla
+                        listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                    })
+
+                    listaAlunosArray.push(listaAlunosDoCurso)
+                }
+            })
+        }
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+    return listaAlunosJson
+}
+
+const getAlunosByNameAndCursoAndStatus = function (nomeDoAluno, siglaDoCurso, statusDoAluno) {
+    let status = statusDoAluno.toUpperCase()
+    let curso = siglaDoCurso.toUpperCase()
+    let nome = new RegExp(nomeDoAluno, 'gi')
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+
+    listaAlunos.alunos.forEach(function (aluno) {
+        if (aluno.status.toUpperCase() == status && aluno.nome.match(nome)) {
+            aluno.curso.forEach(function (curso_aluno) {
+                if (curso_aluno.sigla.toUpperCase() == curso) {
+                    let listaAlunosDoCurso = {}
+
+                    listaAlunosDoCurso.foto = aluno.foto
+                    listaAlunosDoCurso.nome = aluno.nome
+                    listaAlunosDoCurso.matricula = aluno.matricula
+                    listaAlunosDoCurso.status = aluno.status
+                    listaAlunosDoCurso.curso = {}
+
+                    aluno.curso.forEach(function (curso) {
+                        listaAlunosDoCurso.curso.nome = curso.nome
+                        listaAlunosDoCurso.curso.sigla = curso.sigla
+                        listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                    })
+
+                    listaAlunosArray.push(listaAlunosDoCurso)
+                }
+            })
+        }
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+    return listaAlunosJson
+}
+
+const getAlunosByNameAndStatus = function (nomeDoAluno, statusDoAluno) {
+    let status = statusDoAluno.toUpperCase()
+    let nome = new RegExp(nomeDoAluno, 'gi')
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+
+    listaAlunos.alunos.forEach(function (aluno) {
+        if (aluno.status.toUpperCase() == status && aluno.nome.match(nome)) {
+                    let listaAlunosDoCurso = {}
+
+                    listaAlunosDoCurso.foto = aluno.foto
+                    listaAlunosDoCurso.nome = aluno.nome
+                    listaAlunosDoCurso.matricula = aluno.matricula
+                    listaAlunosDoCurso.status = aluno.status
+                    listaAlunosDoCurso.curso = {}
+
+                    aluno.curso.forEach(function (curso) {
+                        listaAlunosDoCurso.curso.nome = curso.nome
+                        listaAlunosDoCurso.curso.sigla = curso.sigla
+                        listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                    })
+
+                    listaAlunosArray.push(listaAlunosDoCurso)
+                
+            
+        }
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+    return listaAlunosJson
+}
+
+const getAlunosByCursoAndStatus = function (siglaDoCurso, statusDoAluno) {
+    let status = statusDoAluno.toUpperCase()
+    let curso = siglaDoCurso.toUpperCase()
+    let listaAlunosJson = false;
+    let listaAlunosArray = []
+
+    listaAlunos.alunos.forEach(function (aluno) {
+        if (aluno.status.toUpperCase() == status) {
+            aluno.curso.forEach(function (curso_aluno) {
+                if (curso_aluno.sigla.toUpperCase() == curso) {
+                    let listaAlunosDoCurso = {}
+
+                    listaAlunosDoCurso.foto = aluno.foto
+                    listaAlunosDoCurso.nome = aluno.nome
+                    listaAlunosDoCurso.matricula = aluno.matricula
+                    listaAlunosDoCurso.status = aluno.status
+                    listaAlunosDoCurso.curso = {}
+
+                    aluno.curso.forEach(function (curso) {
+                        listaAlunosDoCurso.curso.nome = curso.nome
+                        listaAlunosDoCurso.curso.sigla = curso.sigla
+                        listaAlunosDoCurso.curso.conclusao = curso.conclusao
+                    })
+
+                    listaAlunosArray.push(listaAlunosDoCurso)
+                }
+            })
+        }
+    })
+
+    if (listaAlunosArray.length > 0) {
+        listaAlunosJson = {}
+
+        listaAlunosJson.alunos = listaAlunosArray
+    }
+    return listaAlunosJson
+}
+
 const getAlunosDaListaPeloStatus = function (listaNova, statusDoAluno) {
     let status = statusDoAluno.toUpperCase()
     let alunos = listaNova
@@ -251,5 +429,10 @@ module.exports = {
     getAlunosDoCurso,
     getAlunosStatus,
     getAlunosDaListaPeloStatus,
-    getCursosByName
+    getCursosByName,
+    getAlunosByName,
+    getAlunosByNameAndStatus,
+    getAlunosByNameAndCursoAndStatus,
+    getAlunosByNameAndCurso,
+    getAlunosByCursoAndStatus
 }
