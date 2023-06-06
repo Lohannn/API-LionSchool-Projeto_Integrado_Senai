@@ -53,6 +53,8 @@ const getCursosByName = function (nomeDoCurso) {
     if (listaCursosArray.length > 0) {
         listaCursosJson = {}
         listaCursosJson.cursos = listaCursosArray
+    } else {
+        return getCursos()
     }
 
     return listaCursosJson
