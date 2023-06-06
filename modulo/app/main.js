@@ -41,7 +41,7 @@ const verifyNameOfCurso = function (nomeDoCurso){
         }
     })
     
-    return listaCursosArray.size
+    return listaCursosArray.length
 }
 
 const getCursosByName = function (nomeDoCurso) {
