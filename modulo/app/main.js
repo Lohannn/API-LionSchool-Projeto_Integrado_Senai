@@ -31,6 +31,19 @@ const getCursos = function () {
     return listaCursosJson
 }
 
+const verifyNameOfCurso = function (nomeDoCurso){
+    let listaCursosArray = []
+    let value = new RegExp(nomeDoCurso, 'gi')
+
+    listaCursos.cursos.forEach(function (curso) {
+        if (curso.nome.match(value)) {
+            listaCursosArray.push(curso)
+        }
+    })
+    
+    return listaCursosArray.size
+}
+
 const getCursosByName = function (nomeDoCurso) {
     let listaCursosJson = false;
     let listaCursosArray = []
@@ -436,5 +449,6 @@ module.exports = {
     getAlunosByNameAndStatus,
     getAlunosByNameAndCursoAndStatus,
     getAlunosByNameAndCurso,
-    getAlunosByCursoAndStatus
+    getAlunosByCursoAndStatus,
+    verifyNameOfCurso
 }
