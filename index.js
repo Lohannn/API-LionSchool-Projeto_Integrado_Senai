@@ -68,7 +68,7 @@ app.get('/v1/lion-school/verify/:nome', cors(), async function (request, respons
     if (quantidadeDeCursos) {
         statusCode = 200
         dadosEstado = quantidadeDeCursos
-    } else {
+    } else if(quantidadeDeCursos === false){
         statusCode = 500
     }
 
