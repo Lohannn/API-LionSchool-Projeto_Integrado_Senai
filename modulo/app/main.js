@@ -31,24 +31,6 @@ const getCursos = function () {
     return listaCursosJson
 }
 
-const verifyNameOfCurso = function (nomeDoCurso){
-    let listaCursosArray = []
-    let value = new RegExp(nomeDoCurso, 'gi')
-
-    listaCursos.cursos.forEach(function (curso) {
-        if (curso.nome.match(value)) {
-            listaCursosArray.push(curso)
-        }
-    })
-    
-    if(listaCursosArray.length > 0){
-        return listaCursosArray.length
-    } else {
-        return 0
-    }
-   
-}
-
 const getCursosByName = function (nomeDoCurso) {
     let listaCursosJson = false;
     let listaCursosArray = []
