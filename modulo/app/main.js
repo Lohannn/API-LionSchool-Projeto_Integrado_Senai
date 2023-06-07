@@ -436,6 +436,5 @@ module.exports = {
     getAlunosByNameAndStatus,
     getAlunosByNameAndCursoAndStatus,
     getAlunosByNameAndCurso,
-    getAlunosByCursoAndStatus,
-    verifyNameOfCurso
+    getAlunosByCursoAndStatus
 }
