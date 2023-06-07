@@ -58,24 +58,6 @@ app.get('/v1/lion-school/cursos', cors(), async function (request, response, nex
     
 })
 
-app.get('/v1/lion-school/verify/:nome', cors(), async function (request, response, next) {
-    let statusCode;
-    let dadosEstado = {};
-    let nome = request.params.nome;
-    
-    let quantidadeDeCursos = alunosCursos.verifyNameOfCurso(nome)
-    
-    if (quantidadeDeCursos) {
-        statusCode = 200
-        dadosEstado = quantidadeDeCursos
-    } else if(quantidadeDeCursos === false){
-        statusCode = 500
-    }
-
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
-
 app.get('/v1/lion-school/alunos', cors(), async function (request, response, next) {
     let statusCode;
     let dadosEstado = {};
