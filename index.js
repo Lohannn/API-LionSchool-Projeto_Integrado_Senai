@@ -40,6 +40,7 @@ app.get('/v1/lion-school/cursos', cors(), async function (request, response, nex
         dadosEstado = cursos
     } else {
         statusCode = 500
+        dadosEstado = {message : 404}
     }
     } else {
 
