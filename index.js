@@ -80,6 +80,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunosStatus
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (curso !== undefined && status !== undefined) {
@@ -97,6 +98,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunosStatus
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (nome !== undefined && status !== undefined) {
@@ -113,6 +115,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunosStatus
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (curso !== undefined && nome !== undefined) {
@@ -129,6 +132,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunosStatus
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (curso !== undefined) {
@@ -143,6 +147,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunos
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (nome !== undefined) {
@@ -157,6 +162,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunos
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else if (status !== undefined) {
@@ -171,6 +177,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dadosEstado = alunos
             } else {
                 statusCode = 404
+                dadosEstado = {message : 404}
             }
         }
     } else {
